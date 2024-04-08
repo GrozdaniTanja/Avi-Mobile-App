@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "Avi-Mobile-App",
+    "slug": "Avi-Mobile-App",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
