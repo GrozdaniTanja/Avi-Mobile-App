@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {},
+  "extends": "expo/tsconfig.base",
+  "include": [
+    "**/*",
+    "src/components/SecondaryDefaultButton.js" // Add the missing file here
+  ]
+}
