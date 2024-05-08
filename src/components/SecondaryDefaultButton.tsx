@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
         shadowRadius: Spacing.space8,
         borderWidth: 1,
         borderColor: Colors.primary.darkCerulean,
+
     },
     btnText: {
         fontWeight: '600',

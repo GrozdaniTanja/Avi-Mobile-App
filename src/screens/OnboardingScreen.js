@@ -114,7 +114,10 @@ const OnboardingScreen = ({ navigation }) => {
         <View style={{ marginBottom: 20 }}>
           {currentSlideIndex == slides.length - 1 ? (
             <View>
-              <TouchableOpacity style={[styles.getstartedBtn]}>
+              <TouchableOpacity
+                style={[styles.getstartedBtn]}
+                onPress={() => navigation.navigate("WelcomeScreen")}
+              >
                 <Text
                   style={{
                     color: Colors.primary.darkCerulean,
@@ -131,7 +134,11 @@ const OnboardingScreen = ({ navigation }) => {
             <View style={{ flexDirection: "row" }}>
               <SecondaryDefaultButton onPress={skip} title="SKIP" />
               <View style={{ width: 15 }} />
-              <PrimaryDefaultButton onPress={goToNextSlide} title="NEXT" />
+              <PrimaryDefaultButton
+                onPress={goToNextSlide}
+                title="NEXT"
+                flex={1}
+              />
             </View>
           )}
         </View>
