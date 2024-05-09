@@ -21,6 +21,7 @@ const Login = ({ navigation }) => {
 
   const handleLogin = () => {
     // TODO: implement login functionality
+    navigation.navigate("ChatScreen");
   };
 
   const handleResetPassword = () => {

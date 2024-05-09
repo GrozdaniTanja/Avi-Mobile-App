@@ -10,7 +10,11 @@ import OnboardingScreen from "./src/screens/OnboardingScreen";
 import WelcomeScreen from "./src/screens/WelcomeScreen";
 import LoginScreen from "./src/screens/LoginScreen";
 import RegisterScreen from "./src/screens/RegisterScreen";
-
+import ResetPasswordScreen from "./src/screens/ResetPasswordScreen";
+import ChatScreen from "./src/screens/ChatScreen";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import Colors from "./src/utils/constants/Colors";
+import SettingsScreen from "./src/screens/settings/SettingsScreen";
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -61,6 +65,32 @@ const App = () => {
           name="RegisterScreen"
           component={RegisterScreen}
           options={{ headerBackTitleVisible: false, title: " " }}
+        />
+        <Stack.Screen
+          name="ResetPasswordScreen"
+          component={ResetPasswordScreen}
+          options={{ headerBackTitleVisible: false, title: "" }}
+        />
+        <Stack.Screen
+          name="ChatScreen"
+          component={ChatScreen}
+          options={({ navigation }) => ({
+            title: "Avi",
+            headerBackTitle: null,
+            headerRight: () => (
+              <Ionicons
+                name="settings-outline"
+                size={24}
+                style={{ marginRight: 20, color: Colors.primary.darkCerulean }}
+                onPress={() => navigation.navigate("SettingsScreen")}
+              />
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="SettingsScreen"
+          component={SettingsScreen}
+          options={{ title: "Settings" }}
         />
       </Stack.Navigator>
     </NavigationContainer>
