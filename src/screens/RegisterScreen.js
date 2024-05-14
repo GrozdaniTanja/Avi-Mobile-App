@@ -3,6 +3,7 @@ import {
   SafeAreaView,
   View,
   Text,
+  Alert,
   StatusBar,
   StyleSheet,
   TouchableWithoutFeedback,
@@ -13,6 +14,8 @@ import Typography from "../utils/constants/Typography";
 import Spacing from "../utils/constants/Spacing";
 import AppTextInput from "../components/AppTextInput";
 import PrimaryDefaultButton from "../components/PrimaryDefaultButton";
+import { auth } from "../../firebase";
+import { getDatabase, ref, set } from "firebase/database";
 
 const Register = ({ navigation }) => {
   const [name, setName] = useState("");
@@ -21,8 +24,51 @@ const Register = ({ navigation }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleRegister = async () => {
-    // TODO: implement register functionality
+    if (password !== confirmPassword) {
+      Alert.alert("Error", "Passwords do not match");
+      return;
+    }
+    if (!name || !email || !password) {
+      alert("Please fill out all inputs.");
+      return;
+    }
+
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+        const email = user.email;
+        const uid = user.uid;
+        db = getDatabase();
+        set(ref(db, "users/" + uid), {
+          name: name,
+          email: email,
+          password: password,
+        });
+        navigation.navigate("LoginScreen");
+      })
+      .then((data) => {
+        console.log("data ", data);
+      })
+      .catch((err) => {
+        let errorMessage = "An error occurred. Please try again.";
+        switch (err.code) {
+          case "auth/weak-password":
+            errorMessage = "Password should be at least 6 characters.";
+            break;
+          case "auth/email-already-in-use":
+            errorMessage = "The email address is already in use.";
+            break;
+          case "auth/invalid-email":
+            errorMessage = "The email address is invalid.";
+            break;
+          default:
+            break;
+        }
+        Alert.alert("Error", errorMessage);
+      });
   };
+
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
