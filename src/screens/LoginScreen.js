@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   SafeAreaView,
   View,
@@ -14,14 +14,43 @@ import Typography from "../utils/constants/Typography";
 import Spacing from "../utils/constants/Spacing";
 import AppTextInput from "../components/AppTextInput";
 import PrimaryDefaultButton from "../components/PrimaryDefaultButton";
+import { auth } from "../../firebase";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        navigation.replace("ChatScreen");
+      }
+    });
+    return unsubscribe;
+  }, []);
+
   const handleLogin = () => {
-    // TODO: implement login functionality
-    navigation.navigate("ChatScreen");
+    if (!email || !password) {
+      alert("Please enter both email and password.");
+      return;
+    }
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+        console.log(user.email);
+      })
+
+      .catch((err) => {
+        if (
+          err.code === "auth/user-not-found" ||
+          err.code === "auth/wrong-password"
+        ) {
+          alert("Invalid email or password. Please try again.");
+        } else {
+          alert(err.message);
+        }
+      });
   };
 
   const handleResetPassword = () => {

@@ -5,12 +5,23 @@ import Colors from "../utils/constants/Colors";
 import Typography from "../utils/constants/Typography";
 import Spacing from "../utils/constants/Spacing";
 import PrimaryDefaultButton from "../components/PrimaryDefaultButton";
+import { auth } from "../../firebase";
 
 const ResetPasswordScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleResetPassword = () => {
-    // TODO: implement reset password functionality
+    auth.sendPasswordResetEmail(email)
+      .then(function () {
+        console.log("Reset password email successfully sent to:", email);
+        setMessage("Reset password email sent!");
+        navigation.navigate('LoginScreen');
+      })
+      .catch(function (error) {
+        console.log("Error in sending password reset email:", error);
+        setMessage("Error: " + error.message);
+      });
   };
 
   React.useLayoutEffect(() => {
