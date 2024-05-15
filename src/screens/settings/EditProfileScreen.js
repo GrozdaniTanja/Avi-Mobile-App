@@ -19,7 +19,6 @@ const EditProfileScreen = ({ navigation }) => {
         fetchUserData();
     }, []);
 
-    // Fetch user data from the database
     const fetchUserData = () => {
         const user = auth.currentUser;
         if (user) {
@@ -33,14 +32,12 @@ const EditProfileScreen = ({ navigation }) => {
         }
     };
 
-    // Function to extract initials from a given name
     const getInitials = (name) => {
         const names = name.split(" ");
         const initials = names.map((n) => n.charAt(0).toUpperCase()).join("");
         return initials;
     };
 
-    // Function to generate an avatar component based on the given name
     const generateAvatar = (name) => {
         const initials = getInitials(name);
         const avatarStyle = {
@@ -53,7 +50,6 @@ const EditProfileScreen = ({ navigation }) => {
         );
     };
 
-    // Handle submit for saving the profile changes
     const handleSubmit = () => {
         const user = auth.currentUser;
         if (user) {
@@ -67,10 +63,9 @@ const EditProfileScreen = ({ navigation }) => {
             update(userRef, updates)
                 .then(() => {
                     console.log("User data updated successfully");
-                    // Update the state to reflect the changes immediately
                     setName(name);
                     setEmail(email);
-                    navigation.goBack(); // Navigate back to the previous screen
+                    navigation.goBack();
                 })
                 .catch((error) => {
                     console.log("Error updating user data:", error);
