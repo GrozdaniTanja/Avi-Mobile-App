@@ -13,11 +13,14 @@ import Typography from "../../utils/constants/Typography";
 import { auth } from "../../../firebase";
 import { getDatabase, ref, remove } from "firebase/database";
 const SettingsScreen = ({ navigation }) => {
-  // TODO: add profile screen, edit profile functionality, notifications screen, logout button, delete account, FAQ screen
-
+  // TODO: add FAQ screen
 
   const handleProfileSettings = () => {
     navigation.navigate("ProfileScreen");
+  };
+
+  const handleNotifications = () => {
+    navigation.navigate("NotificationSettingsScreen");
   };
 
   const handlePrivacyPolicy = () => {
@@ -130,6 +133,24 @@ const SettingsScreen = ({ navigation }) => {
             style={styles.optionIcon}
           />
           <Text style={styles.optionText}>Profile Settings</Text>
+        </View>
+        <Ionicons
+          name="chevron-forward-outline"
+          size={24}
+          color={Colors.neutral.nightBlack}
+          style={styles.optionArrow}
+        />
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.option} onPress={handleNotifications}>
+        <View style={styles.optionLeft}>
+          <Ionicons
+            name="notifications-outline"
+            size={24}
+            color={Colors.neutral.nightBlack}
+            style={styles.optionIcon}
+          />
+          <Text style={styles.optionText}>Notifications</Text>
         </View>
         <Ionicons
           name="chevron-forward-outline"
