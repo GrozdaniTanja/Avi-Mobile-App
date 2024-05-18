@@ -6,6 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { auth } from "../../firebase";
 import { getDatabase, ref, update, onValue } from "firebase/database";
 import logo from "../images/logo-white.png";
+import { OPENAI_KEY, API_URL, API_YOUTUBE } from '@env';
 
 export default function ChatScreen({ navigation }) {
   const [messages, setMessages] = useState([]);
@@ -16,9 +17,10 @@ export default function ChatScreen({ navigation }) {
 
   const messagesRef = useRef([]);
 
-  const OPENAI_KEY = "sk-proj-2W0buVCqul6TlqmPsQOVT3BlbkFJowrGI2QPzLBaCCVEUuWK";
-  const API_URL = "https://api.openai.com/v1/chat/completions";
-  const API_YOUTUBE = "AIzaSyBsoIGjGWdJsagIapN7YDuzUSbnrlWMsus";
+  const appState = useRef(AppState.currentState);
+  const [appStateVisible, setAppStateVisible] = useState(appState.currentState);
+  const [videoDetails, setVideoDetails] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     console.log('Messages State Updated:', messages);
@@ -311,7 +313,7 @@ export default function ChatScreen({ navigation }) {
           _id: 1,
           avatar: `https://ui-avatars.com/api/?background=ffffff&color=282534&length=1&name=${name}`,
         }}
-        alwaysShowSend
+        alwaysShowSend={true}
         scrollToBottom
         renderSend={renderSend}
         showUserAvatar={true}
