@@ -22,6 +22,15 @@ export default function ChatScreen({ navigation }) {
   const [videoDetails, setVideoDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const videoIds = [
+    "Kvoq4luIYVc",
+    "StLUjMxHZZE",
+    "dJxnU9sOh6Q",
+    "3xR8ZKVALwo",
+    "iyIxRIWl5SI",
+    "YAzTIOy0ID0",
+  ];
+
   useEffect(() => {
     console.log('Messages State Updated:', messages);
     const unKeyboardDidShow = AppState.addEventListener(
@@ -46,6 +55,7 @@ export default function ChatScreen({ navigation }) {
           setName(data.name);
           setUserData(data);
           greetingMessage(data);
+          fetchYoutubeVideoDetails(videoIds);
         },
         (errorObject) => {
           console.log("The read failed: " + errorObject.name);
@@ -53,6 +63,22 @@ export default function ChatScreen({ navigation }) {
       );
     }
   };
+
+  const fetchYoutubeVideoDetails = async (videoIds) => {
+    setIsLoading(true);
+    const api = API_YOUTUBE;
+    const url = `https://www.googleapis.com/youtube/v3/videos?id=${videoIds.join(
+      ","
+    )}&key=${api}&part=snippet,contentDetails,statistics,status`;
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+      setVideoDetails(data.items);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
 
   const greetingMessage = async (summary) => {
     if (summary.lastConversationSummary != null) {
