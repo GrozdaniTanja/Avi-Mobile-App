@@ -85,7 +85,7 @@ export default function ChatScreen({ navigation }) {
       console.log("Summary:" + summary.lastConversationSummary);
 
       const apiRequestBody = {
-        model: "gpt-3.5-turbo",
+        model: "gpt-4o",
         messages: [
           {
             role: "system",
@@ -147,7 +147,7 @@ export default function ChatScreen({ navigation }) {
 
   const callApi = async (value) => {
     const includeVideoInfo = !isLoading && Math.random() < 0.5;
-
+  
     let videoInfo = "";
     if (isLoading) {
       videoInfo = "Loading video details...";
@@ -158,37 +158,26 @@ export default function ChatScreen({ navigation }) {
     } else {
       videoInfo = "No video details available.";
     }
-
+  
     const apiRequestBody = {
-      model: "gpt-3.5-turbo",
+      model: "gpt-4",
       messages: [
         {
           role: "system",
-          content: `You are a highly empathetic and professional psychologist/terapist. Your primary role is to help users manage their emotions, stress, 
-      and mental health issues. You are adept at asking insightful and thought-provoking questions to encourage users to explore 
-      their feelings and behaviors. Help them and provide them solution for their problems. Also suggest some great resources for yoga, fitness, relaxation, and motivation. Please let them know that you have resources also appropriate to the user's need.  \n\n${
-        includeVideoInfo ? "Some resources: " + videoInfo : ""
-      }\n\nUser: ${value}`,
+          content: `You are a highly empathetic and professional psychologist/therapist. Your primary role is to help users manage their emotions, stress, and mental health issues. Be concise and provide short, specific advice or questions to encourage users to explore their feelings and behaviors. ${
+            includeVideoInfo ? "Some resources: " + videoInfo : ""
+          }\n\nUser: ${value}`,
         },
         {
           role: "system",
-          content: `Here are some potential resources you can offer to the user. Please recommend these resources as appropriate to the user's needs. Yoga exercises: Search 'Yoga with Adriene' this channel: https://www.youtube.com/@yogawithadriene,'Yoga with Kassandra' this channel : https://www.youtube.com/@yogawithkassandra or 'Yoga with MadyMorris ' this channel: https://www.youtube.com/@madymorrison . For general fitness: Search 'FitnessBlender on YouTube' this channel: https://www.youtube.com/@FitnessBlender , 'Fitness with MadyMorris ' this channel: https://www.youtube.com/@madymorrison , 'Fitness with Growingannanas'this channel : https://www.youtube.com/watch?v=szXJSRb3tiY or 'Fitness with Juice and Toya' this channel : https://www.youtube.com/@JuiceandToya  on YouTube.  For mindfulness and relaxation: Search 'Music for relaxation' this channel: https://www.youtube.com/watch?v=iyIxRIWl5SI&pp=ygUabWluZGZ1bG5lc3MgYW5kIHJlbGF4YXRpb24%3D , 'Meditation' this channel: https://www.youtube.com/@GreatMeditation or "DrJulie Feeling better" this channel: https://www.youtube.com/@DrJulie on YouTube. For motivation: Search 'Tedex talks ' this channel: https://www.youtube.com/@TEDx ,'Motivation talks' this channel: https://www.youtube.com/@MotivationHubOfficial ,'Motivation talks' this channel: https://www.youtube.com/@MulliganBrothers , "HuberManLab - Scientiic an motivation podcast" this channel: https://www.youtube.com/@hubermanlab/featured, 'Meaning of life' this channel: https://www.youtube.com/@drgabormate9132 on YouTube. `,
-        },
-        {
-          role: "system",
-          content: `Here are some potential resources you can offer to the user: \
-        Yoga exercises: Search 'Yoga with Adriene' this channel: https://www.youtube.com/@yogawithadriene,'Yoga with Kassandra' this channel : https://www.youtube.com/@yogawithkassandra or 'Yoga with MadyMorris ' this channel: https://www.youtube.com/@madymorrison . \
-        For general fitness: Search 'FitnessBlender on YouTube' this channel: https://www.youtube.com/@FitnessBlender , 'Fitness with MadyMorris ' this channel: https://www.youtube.com/@madymorrison , 'Fitness with Growingannanas'this channel : https://www.youtube.com/watch?v=szXJSRb3tiY or 'Fitness with Juice and Toya' this channel : https://www.youtube.com/@JuiceandToya  on YouTube. \
-        For mindfulness and relaxation: Search 'Music for relaxation' this channel: https://www.youtube.com/watch?v=iyIxRIWl5SI&pp=ygUabWluZGZ1bG5lc3MgYW5kIHJlbGF4YXRpb24%3D , 'Meditation' this channel: https://www.youtube.com/@GreatMeditation or 'DrJulie Feeling better' this channel: https://www.youtube.com/@DrJulie on YouTube. \
-        For motivation: Search 'Tedex talks ' this channel: https://www.youtube.com/@TEDx ,'Motivation talks' this channel: https://www.youtube.com/@MotivationHubOfficial ,'Motivation talks' this channel: https://www.youtube.com/@MulliganBrothers , 'HuberManLab - Scientiic an motivation podcast'this channel: https://www.youtube.com/@hubermanlab/featured, 'Meaning of life' this channel: https://www.youtube.com/@drgabormate9132 on YouTube. \
-        \n\n User: ${value}`,
+          content: `Here are some potential resources you can offer to the user. Please recommend these resources as appropriate to the user's needs. Yoga exercises: Search 'Yoga with Adriene' this channel: https://www.youtube.com/@yogawithadriene,'Yoga with Kassandra' this channel : https://www.youtube.com/@yogawithkassandra or 'Yoga with MadyMorris ' this channel: https://www.youtube.com/@madymorrison . For general fitness: Search 'FitnessBlender on YouTube' this channel: https://www.youtube.com/@FitnessBlender , 'Fitness with MadyMorris ' this channel: https://www.youtube.com/@madymorrison , 'Fitness with Growingannanas'this channel : https://www.youtube.com/watch?v=szXJSRb3tiY or 'Fitness with Juice and Toya' this channel : https://www.youtube.com/@JuiceandToya  on YouTube. For mindfulness and relaxation: Search 'Music for relaxation' this channel: https://www.youtube.com/watch?v=iyIxRIWl5SI&pp=ygUabWluZGZ1bG5lc3MgYW5kIHJlbGF4YXRpb24%3D , 'Meditation' this channel: https://www.youtube.com/@GreatMeditation or 'DrJulie Feeling better' this channel: https://www.youtube.com/@DrJulie on YouTube. For motivation: Search 'Tedex talks ' this channel: https://www.youtube.com/@TEDx ,'Motivation talks' this channel: https://www.youtube.com/@MotivationHubOfficial ,'Motivation talks' this channel: https://www.youtube.com/@MulliganBrothers , 'HuberManLab - Scientiic an motivation podcast'this channel: https://www.youtube.com/@hubermanlab/featured, 'Meaning of life' this channel: https://www.youtube.com/@drgabormate9132 on YouTube. \n\n User: ${value}`,
         },
         { role: "user", content: value },
       ],
-      max_tokens: 1024,
-      temperature: 0.5,
+      max_tokens: 350, // Reduce the maximum number of tokens for shorter responses
+      temperature: 0.5, // Adjust as necessary for more focused responses
     };
-
+  
     try {
       const res = await fetch(API_URL, {
         method: "POST",
@@ -198,22 +187,18 @@ export default function ChatScreen({ navigation }) {
         },
         body: JSON.stringify(apiRequestBody),
       });
-
+  
       const data = await res.json();
       console.log("API Response:", data);
-
-      if (
-        data.choices &&
-        data.choices.length > 0 &&
-        data.choices[0]?.message?.content
-      ) {
+  
+      if (data.choices && data.choices.length > 0 && data.choices[0]?.message?.content) {
         const response = data.choices[0].message.content;
         addNewMessage(response);
       }
     } catch (error) {
       console.error("API Error:", error);
     }
-  };
+  };  
 
   const addNewMessage = (data) => {
     const newMessage = {
@@ -256,10 +241,10 @@ export default function ChatScreen({ navigation }) {
     const conversation = messagesRef.current
       .map((message) => `${message.user.name}: ${message.text}`)
       .join("\n");
-    const prompt = `You are an expertise in understanding and summarizing conversations. Your task is to extract the main points, emotions and possible actionable items from the following conversation, and summarize it in a concise and comprehensive manner .Be cerfull to not be so log. Here is the conversation you need to summarize: \n${conversation}`;
+    const prompt = `You are an expertise in understanding and summarizing conversations. Your task is to extract the main points, emotions and possible actionable items from the following conversation, and summarize it in a concise and comprehensive manner. Be carefull to not be so long. Here is the conversation you need to summarize: \n${conversation}`;
 
     const apiRequestBody = {
-      model: "gpt-3.5-turbo",
+      model: "gpt-4o",
       messages: [{ role: "system", content: prompt }],
       max_tokens: 500,
       temperature: 0.7,
