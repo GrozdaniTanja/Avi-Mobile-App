@@ -164,17 +164,34 @@ export default function ChatScreen({ navigation }) {
       messages: [
         {
           role: "system",
-          content: `You are a highly empathetic and professional psychologist/therapist. Your primary role is to help users manage their emotions, stress, and mental health issues. Be concise and provide short, specific advice or questions to encourage users to explore their feelings and behaviors. ${
+          content: `You are a highly empathetic and professional psychologist/therapist. Your primary role is to help users manage 
+                    their emotions, stress, and mental health issues. Ask insightful and thought-provoking questions to encourage 
+                    users to explore their feelings and behaviors. Be concise and provide short, specific advice or questions. 
+                    Also suggest some great resources for yoga, fitness, relaxation, and motivation as appropriate to the user's need. 
+                    If the user asks a question or brings up a topic that is not related to mental health or issues connected to mental 
+                    health, politely inform them that the current application focuses on mental health and suggest bringing up related topics instead.${
             includeVideoInfo ? "Some resources: " + videoInfo : ""
           }\n\nUser: ${value}`,
         },
         {
           role: "system",
-          content: `Here are some potential resources you can offer to the user. Please recommend these resources as appropriate to the user's needs. Yoga exercises: Search 'Yoga with Adriene' this channel: https://www.youtube.com/@yogawithadriene,'Yoga with Kassandra' this channel : https://www.youtube.com/@yogawithkassandra or 'Yoga with MadyMorris ' this channel: https://www.youtube.com/@madymorrison . For general fitness: Search 'FitnessBlender on YouTube' this channel: https://www.youtube.com/@FitnessBlender , 'Fitness with MadyMorris ' this channel: https://www.youtube.com/@madymorrison , 'Fitness with Growingannanas'this channel : https://www.youtube.com/watch?v=szXJSRb3tiY or 'Fitness with Juice and Toya' this channel : https://www.youtube.com/@JuiceandToya  on YouTube. For mindfulness and relaxation: Search 'Music for relaxation' this channel: https://www.youtube.com/watch?v=iyIxRIWl5SI&pp=ygUabWluZGZ1bG5lc3MgYW5kIHJlbGF4YXRpb24%3D , 'Meditation' this channel: https://www.youtube.com/@GreatMeditation or 'DrJulie Feeling better' this channel: https://www.youtube.com/@DrJulie on YouTube. For motivation: Search 'Tedex talks ' this channel: https://www.youtube.com/@TEDx ,'Motivation talks' this channel: https://www.youtube.com/@MotivationHubOfficial ,'Motivation talks' this channel: https://www.youtube.com/@MulliganBrothers , 'HuberManLab - Scientiic an motivation podcast'this channel: https://www.youtube.com/@hubermanlab/featured, 'Meaning of life' this channel: https://www.youtube.com/@drgabormate9132 on YouTube. \n\n User: ${value}`,
+          content: `Here are some potential resources you can offer to the user. Please recommend these resources as appropriate to the 
+                  user's needs. Yoga exercises: Search 'Yoga with Adriene' this channel: https://www.youtube.com/@yogawithadriene,'Yoga with Kassandra' 
+                  this channel : https://www.youtube.com/@yogawithkassandra or 'Yoga with MadyMorris ' 
+                  this channel: https://www.youtube.com/@madymorrison . 
+                  For general fitness: Search 'FitnessBlender on YouTube' this channel: https://www.youtube.com/@FitnessBlender , 
+                  'Fitness with MadyMorris ' this channel: https://www.youtube.com/@madymorrison , 
+                  'Fitness with Growingannanas'this channel : https://www.youtube.com/watch?v=szXJSRb3tiY or 
+                  'Fitness with Juice and Toya' this channel : https://www.youtube.com/@JuiceandToya  on YouTube. 
+                  For mindfulness and relaxation: Search 'Music for relaxation' this channel: https://www.youtube.com/watch?v=iyIxRIWl5SI&pp=ygUabWluZGZ1bG5lc3MgYW5kIHJlbGF4YXRpb24%3D , 
+                  'Meditation' this channel: https://www.youtube.com/@GreatMeditation or 'DrJulie Feeling better' this channel: https://www.youtube.com/@DrJulie on YouTube. 
+                  For motivation: Search 'Tedex talks ' this channel: https://www.youtube.com/@TEDx ,'Motivation talks' this channel: https://www.youtube.com/@MotivationHubOfficial ,
+                  'Motivation talks' this channel: https://www.youtube.com/@MulliganBrothers , 'HuberManLab - Scientiic an motivation podcast'this channel: https://www.youtube.com/@hubermanlab/featured, 
+                  'Meaning of life' this channel: https://www.youtube.com/@drgabormate9132 on YouTube. \n\n User: ${value}`,
         },
         { role: "user", content: value },
       ],
-      max_tokens: 350, // Reduce the maximum number of tokens for shorter responses
+      max_tokens: 256, // Reduce the maximum number of tokens for shorter responses
       temperature: 0.5, // Adjust as necessary for more focused responses
     };
   
@@ -241,7 +258,7 @@ export default function ChatScreen({ navigation }) {
     const conversation = messagesRef.current
       .map((message) => `${message.user.name}: ${message.text}`)
       .join("\n");
-    const prompt = `You are an expertise in understanding and summarizing conversations. Your task is to extract the main points, emotions and possible actionable items from the following conversation, and summarize it in a concise and comprehensive manner. Be carefull to not be so long. Here is the conversation you need to summarize: \n${conversation}`;
+    const prompt = `You are an expertise in understanding and summarizing conversations. Your task is to extract the main points, emotions and possible actionable items from the following conversation, and summarize it in a concise and comprehensive manner. Be careful to not be so long. Here is the conversation you need to summarize: \n${conversation}`;
 
     const apiRequestBody = {
       model: "gpt-4o",
