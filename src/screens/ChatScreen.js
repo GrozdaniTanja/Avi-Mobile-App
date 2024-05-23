@@ -5,8 +5,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { auth } from "../../firebase";
 import { getDatabase, ref, update, onValue } from "firebase/database";
-import logo from "../images/logo-white.png";
-import { OPENAI_KEY, API_URL, API_YOUTUBE } from '@env';
+import logo from "../assets/images/avi-logo.png";
+import { OPENAI_KEY, API_URL, API_YOUTUBE } from "@env";
 
 export default function ChatScreen({ navigation }) {
   const [messages, setMessages] = useState([]);
@@ -32,7 +32,7 @@ export default function ChatScreen({ navigation }) {
   ];
 
   useEffect(() => {
-    console.log('Messages State Updated:', messages);
+    console.log("Messages State Updated:", messages);
     const unKeyboardDidShow = AppState.addEventListener(
       "change",
       handleAppStateChange
@@ -78,7 +78,7 @@ export default function ChatScreen({ navigation }) {
     } catch (error) {
       console.error("Error:", error);
     }
-  }
+  };
 
   const greetingMessage = async (summary) => {
     if (summary.lastConversationSummary != null) {
@@ -147,7 +147,7 @@ export default function ChatScreen({ navigation }) {
 
   const callApi = async (value) => {
     const includeVideoInfo = !isLoading && Math.random() < 0.5;
-  
+
     let videoInfo = "";
     if (isLoading) {
       videoInfo = "Loading video details...";
@@ -158,7 +158,7 @@ export default function ChatScreen({ navigation }) {
     } else {
       videoInfo = "No video details available.";
     }
-  
+
     const apiRequestBody = {
       model: "gpt-4",
       messages: [
@@ -170,8 +170,8 @@ export default function ChatScreen({ navigation }) {
                     Also suggest some great resources for yoga, fitness, relaxation, and motivation as appropriate to the user's need. 
                     If the user asks a question or brings up a topic that is not related to mental health or issues connected to mental 
                     health, politely inform them that the current application focuses on mental health and suggest bringing up related topics instead.${
-            includeVideoInfo ? "Some resources: " + videoInfo : ""
-          }\n\nUser: ${value}`,
+                      includeVideoInfo ? "Some resources: " + videoInfo : ""
+                    }\n\nUser: ${value}`,
         },
         {
           role: "system",
@@ -194,7 +194,7 @@ export default function ChatScreen({ navigation }) {
       max_tokens: 256, // Reduce the maximum number of tokens for shorter responses
       temperature: 0.5, // Adjust as necessary for more focused responses
     };
-  
+
     try {
       const res = await fetch(API_URL, {
         method: "POST",
@@ -204,18 +204,22 @@ export default function ChatScreen({ navigation }) {
         },
         body: JSON.stringify(apiRequestBody),
       });
-  
+
       const data = await res.json();
       console.log("API Response:", data);
-  
-      if (data.choices && data.choices.length > 0 && data.choices[0]?.message?.content) {
+
+      if (
+        data.choices &&
+        data.choices.length > 0 &&
+        data.choices[0]?.message?.content
+      ) {
         const response = data.choices[0].message.content;
         addNewMessage(response);
       }
     } catch (error) {
       console.error("API Error:", error);
     }
-  };  
+  };
 
   const addNewMessage = (data) => {
     const newMessage = {
@@ -232,7 +236,7 @@ export default function ChatScreen({ navigation }) {
       messagesRef.current = GiftedChat.append(previousMessages, [newMessage]);
       return messagesRef.current;
     });
-  };  
+  };
 
   const handleAppStateChange = (nextAppState) => {
     if (
@@ -312,7 +316,6 @@ export default function ChatScreen({ navigation }) {
       console.log("No user is signed in.");
     }
   };
-
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
