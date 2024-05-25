@@ -89,9 +89,12 @@ export default function ChatScreen({ navigation }) {
         messages: [
           {
             role: "system",
-            content: `You are a highly empathetic and professional psychologist/terapist. Your primary role is to help users manage their emotions, stress, 
-        and mental health issues. You are adept at asking insightful and thought-provoking questions to encourage users to explore 
-        their feelings and behaviors. Help them and provide them solution for their problems. Also suggest some great resources for yoga, fitness, relaxation, and motivation. Please let them know that you have resources also appropriate to the user's need.`,
+            content: `You are a highly empathetic and professional psychologist/therapist/mental health professional. Your primary role is to help users manage 
+            their emotions, stress, and mental health issues. Ask insightful and thought-provoking questions to encourage 
+            users to explore their feelings and behaviors. Be concise and provide short, specific advice or questions. 
+            Also suggest some great resources for yoga, fitness, relaxation, and motivation as appropriate to the user's need. 
+            If the user asks a question or brings up a topic that is not related to mental health or issues connected to mental 
+            health, politely inform them that the current application focuses on mental health and suggest bringing up related topics instead.`,
           },
           {
             role: "system",
@@ -160,11 +163,11 @@ export default function ChatScreen({ navigation }) {
     }
 
     const apiRequestBody = {
-      model: "gpt-4",
+      model: "gpt-4o",
       messages: [
         {
           role: "system",
-          content: `You are a highly empathetic and professional psychologist/therapist. Your primary role is to help users manage 
+          content: `You are a highly empathetic and professional psychologist/therapist/mental health professional. Your primary role is to help users manage 
                     their emotions, stress, and mental health issues. Ask insightful and thought-provoking questions to encourage 
                     users to explore their feelings and behaviors. Be concise and provide short, specific advice or questions. 
                     Also suggest some great resources for yoga, fitness, relaxation, and motivation as appropriate to the user's need. 
@@ -191,8 +194,8 @@ export default function ChatScreen({ navigation }) {
         },
         { role: "user", content: value },
       ],
-      max_tokens: 256, // Reduce the maximum number of tokens for shorter responses
-      temperature: 0.5, // Adjust as necessary for more focused responses
+      max_tokens: 512, // Reduce the maximum number of tokens for shorter responses
+      temperature: 0.6, // Adjust as necessary for more focused responses
     };
 
     try {
@@ -325,7 +328,7 @@ export default function ChatScreen({ navigation }) {
     });
   }, [navigation]);
   const renderSend = (props) => {
-    console.log("Render Send Called");
+    //console.log("Render Send Called");
     return (
       <Send {...props}>
         <View style={{ marginRight: 10, marginBottom: 10 }}>

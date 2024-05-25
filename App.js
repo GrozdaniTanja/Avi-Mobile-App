@@ -22,9 +22,11 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import Colors from "./src/utils/constants/Colors";
 import SettingsScreen from "./src/screens/settings/SettingsScreen";
 import { AppProvider } from "./AppContext";
+import { LogBox } from 'react-native';
 const Stack = createStackNavigator();
 
 const App = () => {
+  LogBox.ignoreAllLogs(true); 
   return (
     <AppProvider>
       <NavigationContainer>

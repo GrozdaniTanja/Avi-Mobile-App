@@ -80,32 +80,16 @@ const SettingsScreen = ({ navigation }) => {
   // Handle the confirmation for account deletion
   const handleConfirmation = () => {
     const user = auth.currentUser;
+
     if (user) {
-
-      const db = getDatabase();
-      const userRef = ref(db, `users/${user.uid}`);
-
-      // Delete the user data from the Realtime Database
-      remove(userRef)
+      user
+        .delete()
         .then(() => {
-          console.log("User data deleted from Realtime Database!");
-
-          // Delete the user account
-          user.delete()
-            .then(() => {
-              console.log("User account deleted!");
-              if (navigation) {
-                navigation.navigate("WelcomeScreen");
-              } else {
-                console.log("navigation is undefined.");
-              }
-            })
-            .catch((error) => {
-              console.log("Delete account error", error);
-            });
+          console.log("User account deleted!");
+          navigation.navigate("WelcomeScreen");
         })
         .catch((error) => {
-          console.log("Delete data error", error);
+          console.log("Delete account error", error);
         });
     } else {
       console.log("No user is signed in.");
