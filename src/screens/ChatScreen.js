@@ -1,4 +1,4 @@
-import { View, AppState } from "react-native";
+import { View, Text, AppState } from "react-native";
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import { GiftedChat, Send } from "react-native-gifted-chat";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -7,6 +7,8 @@ import { auth } from "../../firebase";
 import { getDatabase, ref, update, onValue } from "firebase/database";
 import logo from "../assets/images/avi-logo.png";
 import { OPENAI_KEY, API_URL, API_YOUTUBE } from "@env";
+import { ActivityIndicator } from "react-native";
+import TypingIndicator from "../components/TypingIndicator";
 
 export default function ChatScreen({ navigation }) {
   const [messages, setMessages] = useState([]);
@@ -21,6 +23,7 @@ export default function ChatScreen({ navigation }) {
   const [appStateVisible, setAppStateVisible] = useState(appState.currentState);
   const [videoDetails, setVideoDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isBotTyping, setIsBotTyping] = useState(false);
 
   const videoIds = [
     "Kvoq4luIYVc",
@@ -149,6 +152,7 @@ export default function ChatScreen({ navigation }) {
   }, []);
 
   const callApi = async (value) => {
+    setIsBotTyping(true);
     const includeVideoInfo = !isLoading && Math.random() < 0.5;
 
     let videoInfo = "";
@@ -219,6 +223,7 @@ export default function ChatScreen({ navigation }) {
         const response = data.choices[0].message.content;
         addNewMessage(response);
       }
+      setIsBotTyping(false);
     } catch (error) {
       console.error("API Error:", error);
     }
@@ -328,7 +333,6 @@ export default function ChatScreen({ navigation }) {
     });
   }, [navigation]);
   const renderSend = (props) => {
-    //console.log("Render Send Called");
     return (
       <Send {...props}>
         <View style={{ marginRight: 10, marginBottom: 10 }}>
@@ -351,6 +355,17 @@ export default function ChatScreen({ navigation }) {
         scrollToBottom
         renderSend={renderSend}
         showUserAvatar={true}
+        renderFooter={() => (
+          <View
+            style={{
+              alignItems: "flex-start",
+              marginLeft: 10,
+              marginVertical: 5,
+            }}
+          >
+            {isBotTyping && <TypingIndicator />}
+          </View>
+        )}
       />
     </View>
   );
