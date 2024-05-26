@@ -1,14 +1,14 @@
-import { View, Text, AppState } from "react-native";
+import { View, AppState } from "react-native";
 import React, { useState, useCallback, useEffect, useRef } from "react";
-import { GiftedChat, Send } from "react-native-gifted-chat";
+import { GiftedChat, Send, Bubble } from "react-native-gifted-chat";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { auth } from "../../firebase";
 import { getDatabase, ref, update, onValue } from "firebase/database";
 import logo from "../assets/images/avi-logo.png";
 import { OPENAI_KEY, API_URL, API_YOUTUBE } from "@env";
-import { ActivityIndicator } from "react-native";
 import TypingIndicator from "../components/TypingIndicator";
+import Colors from "../utils/constants/Colors";
 
 export default function ChatScreen({ navigation }) {
   const [messages, setMessages] = useState([]);
@@ -342,6 +342,22 @@ export default function ChatScreen({ navigation }) {
     );
   };
 
+  const renderBubble = (props) => {
+    const { user } = props.currentMessage;
+
+    return (
+      <Bubble
+        {...props}
+        wrapperStyle={{
+          left: {
+            backgroundColor:
+              user._id === 2 ? "#FFFFFF" : Colors.primary.darkCerulean,
+          },
+        }}
+      />
+    );
+  };
+
   return (
     <View style={{ flex: 1, paddingBottom: bottom }}>
       <GiftedChat
@@ -355,6 +371,7 @@ export default function ChatScreen({ navigation }) {
         scrollToBottom
         renderSend={renderSend}
         showUserAvatar={true}
+        renderBubble={renderBubble}
         renderFooter={() => (
           <View
             style={{

@@ -35,5 +35,7 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
-*.package-lock.json
-*.yarn.lock
+/Microsoft/Windows/UUS/
+package-lock.json
+yarn.lock
+%ProgramData%/Microsoft/Windows/UUS/State/_active.uusver
